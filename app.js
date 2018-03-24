@@ -4,12 +4,12 @@ var sentiment = require('sentiment');
 var firebase = require('firebase');
 
 var fireapp = firebase.initializeApp({ 
-apiKey: "AIzaSyCOmubrc3gEd6LOW5UfRH5LVaL-GFgRCgk",
-authDomain: "not-so-awesome-project-45a2e.firebaseapp.com",
-databaseURL: "https://not-so-awesome-project-45a2e.firebaseio.com",
-projectId: "not-so-awesome-project-45a2e",
-storageBucket: "not-so-awesome-project-45a2e.appspot.com",
-messagingSenderId: "481329884022"})
+    apiKey: "AIzaSyAbEvVDqojZxxiHY7tijKhj__ml5a7mdEk",
+    authDomain: "hack-d622e.firebaseapp.com",
+    databaseURL: "https://hack-d622e.firebaseio.com",
+    projectId: "hack-d622e",
+    storageBucket: "",
+    messagingSenderId: "834161010109"})
 var ref = fireapp.database().ref('/nlpScores')
 //App setup
 var port = process.env.PORT || 4000;
