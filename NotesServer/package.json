@@ -1,0 +1,20 @@
+{
+  "name": "sn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.15.4",
+    "node-record-lpcm16": "^0.3.0",
+    "ocr-space-api": "^1.0.1",
+    "sentiment": "^4.0.1",
+    "textract": "^2.1.2",
+    "youtube.com-extended": "^2.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
