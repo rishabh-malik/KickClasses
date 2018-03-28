@@ -154,67 +154,67 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <div class="wrap">
 <!----start-img-cursual---->
 	<div id="owl-demo" class="owl-carousel">
-		<div class="item" onclick="location.href='details.html';">
+		<div class="item">
 			<div class="cau_left">
 				<img class="lazyOwl" data-src="book1.jpg" alt="Lazy Owl Image">
 			</div>
 			<div class="cau_left">
-				<h4><a href="details.html">book</a></h4>
-				<a href="details.html" class="btn">shop</a>
+				<h4>book</h4>
+				<button onclick="buy()">shop this one</button>
 			</div>
 		</div>	
-		<div class="item" onclick="location.href='details.html';">
+		<div class="item">
 			<div class="cau_left">
 				<img class="lazyOwl" data-src="book2.jpg" alt="Lazy Owl Image">
 			</div>
 			<div class="cau_left">
-				<h4><a href="details.html">book</a></h4>
-				<a href="details.html" class="btn">shop</a>
+				<h4>book</h4>
+				<button onclick="buy()">shop this one</button>
 			</div>
 		</div>	
-		<div class="item" onclick="location.href='details.html';">
+		<div class="item">
 			<div class="cau_left">
 				<img class="lazyOwl" data-src="book3.jpg" alt="Lazy Owl Image">
 			</div>
 			<div class="cau_left">
-				<h4><a href="details.html">book</a></h4>
-				<a href="details.html" class="btn">shop</a>
+				<h4>book</h4>
+				<button onclick="buy()">shop this one</button>
 			</div>
 		</div>	
-		<div class="item" onclick="location.href='details.html';">
+		<div class="item">
 			<div class="cau_left">
 				<img class="lazyOwl" data-src="book6.jpg" alt="Lazy Owl Image">
 			</div>
 			<div class="cau_left">
-				<h4><a href="details.html">book</a></h4>
-				<a href="details.html" class="btn">shop</a>
+				<h4>book</h4>
+				<button onclick="buy()">shop this one</button>
 			</div>
 		</div>	
-		<div class="item" onclick="location.href='details.html';">
+		<div class="item">
 			<div class="cau_left">
 				<img class="lazyOwl" data-src="book5.jpg" alt="Lazy Owl Image">
 			</div>
 			<div class="cau_left">
-				<h4><a href="details.html">book</a></h4>
-				<a href="details.html" class="btn">shop</a>
+				<h4>book</h4>
+				<button onclick="buy()">shop this one</button>
 			</div>
 		</div>	
-		<div class="item" onclick="location.href='details.html';">
+		<div class="item">
 			<div class="cau_left">
 				<img class="lazyOwl" data-src="book6.jpg" alt="Lazy Owl Image">
 			</div>
 			<div class="cau_left">
-				<h4><a href="details.html">book</a></h4>
-				<a href="details.html" class="btn">shop</a>
+				<h4>book</h4>
+				<button onclick="buy()">shop this one</button>
 			</div>
 		</div>	
-		<div class="item" onclick="location.href='details.html';">
+		<div class="item">
 			<div class="cau_left">
 				<img class="lazyOwl" data-src="book1.jpg" alt="Lazy Owl Image">
 			</div>
 			<div class="cau_left">
-				<h4><a href="details.html">book</a></h4>
-				<a href="details.html" class="btn">shop</a>
+				<h4>book</h4>
+				<button onclick="buy()">shop this one</button>
 			</div>
 		</div>	
 	</div>
@@ -400,5 +400,302 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	</div>
 </div>
 </div>
+<script>
+	if (typeof web3 !== 'undefined') {
+        web3 = new Web3(web3.currentProvider);
+    } else {
+        // set the provider you want from Web3.providers
+        web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+    }
+    web3.eth.defaultAccount = web3.eth.accounts[0];
+    var storeContract = web3.eth.contract([
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "_owner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "_spender",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "Approval",
+		"type": "event"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_spender",
+				"type": "address"
+			},
+			{
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "approve",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_spender",
+				"type": "address"
+			},
+			{
+				"name": "_value",
+				"type": "uint256"
+			},
+			{
+				"name": "_extraData",
+				"type": "bytes"
+			}
+		],
+		"name": "approveAndCall",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "transfer",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_from",
+				"type": "address"
+			},
+			{
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "transferFrom",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "_from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "Transfer",
+		"type": "event"
+	},
+	{
+		"inputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "fallback"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_owner",
+				"type": "address"
+			},
+			{
+				"name": "_spender",
+				"type": "address"
+			}
+		],
+		"name": "allowance",
+		"outputs": [
+			{
+				"name": "remaining",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_owner",
+				"type": "address"
+			}
+		],
+		"name": "balanceOf",
+		"outputs": [
+			{
+				"name": "balance",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "decimals",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "name",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "symbol",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "totalSupply",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "version",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]);
+    var store = storeContract.at('0x8cdaf0cd259887258bc13a92c0a6da92698644c0');
+    console.log(store);
+	function buy(){
+	console.log('buying');	
+    store.approve('0x766CFD482B02B0468662bB1a21F6D15a10965b09','20',function (err, res) {
+        if(!err){
+            console.log(res);
+        }else {
+            console.log(err);
+        }
+	})
+	store.transfer('0x1b414C660EAe89DbB809A29428b3CB0b915684ed','20',function(err,res){
+		if(!err){
+            console.log(res);
+        }else {
+            console.log(err);
+        }
+	})
+};
+</script>
 </body>
 </html>

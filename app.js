@@ -29,7 +29,7 @@ app.use(allowCrossDomain);
 app.use(express.static('public'));
 
 app.get('/store',function(req,res){
-    res.sendFile(__dirname+'/public/store.html');
+    res.sendFile(__dirname+'/Store/store.html');
 });
 
 //Socket setup
