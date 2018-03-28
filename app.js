@@ -28,6 +28,10 @@ app.use(allowCrossDomain);
 // serve static files
 app.use(express.static('public'));
 
+app.get('/store',function(req,res){
+    res.sendFile(__dirname+'/public/store.html');
+});
+
 //Socket setup
 //socket is a function which takes which server we want to work with
 var io=socket(server);
