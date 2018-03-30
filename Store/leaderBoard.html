@@ -1,222 +1,682 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>LeaderBoard</title>
-    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
-    <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <style>
-            table {
-                font-family: arial, sans-serif;
-                border-collapse: collapse;
-                width: 100%;
-            }
-            
-            td, th {
-                border: 1px solid #dddddd;
-                text-align: left;
-                padding: 8px;
-            }
-            
-            tr:nth-child(even) {
-                background-color: #dddddd;
-            }
+<style>
+    * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-font-smoothing: antialiased !important;
+  -o-font-smoothing: antialiased !important;
+  text-rendering: optimizeLegibility !important;
+}
+body {
+  font-family: "soleil", "roboto", sans-serif;
+  overflow-x: hidden;
+  background-color: #f1f1f1;
+  color: #040404;
+}
+.justify-center {
+  justify-content: center;
+}
+.menu-icon {
+  flex-grow: 1;
+  padding: 0 58px;
+  border-left: 1px solid #fff;
+  border-right: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  background-color: #fff;
+  z-index: 2;
+}
+.flex {
+  display: flex;
+}
+.column {
+  flex-direction: column;
+}
+.search-bar {
+  padding: 40px 10vw 0;
+}
+.search {
+  border: 0;
+  padding: 8px 20px;
+  font-size: 18px;
+  font-family: "soleil", "roboto", sans-serif;
+  border: 1px solid #bdbbbb;
+}
+.active {
+  background-color: #eeeeee !important;
+  border-left: 1px solid #e2e2e2 !important;
+  border-right: 1px solid #e2e2e2 !important;
+  border-bottom: 1px solid #e2e2e2 !important;
+}
+.nav {
+  align-items: center;
+  color: #040404;
+  font-size: 22px;
+  font-weight: 500;
+  justify-content: space-between;
+  background-color: #ffffff;
+  padding: 0 10vw;
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.16);
+  -moz-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.16);
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.16);
+}
+.menu-block {
+  margin-left: -1px;
+}
+.menu-block,
+.user-block {
+  position: relative;
+}
+.pointer {
+  cursor: pointer;
+}
+.user-container {
+  padding: 10px 15px;
+  border-left: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  border-top: 1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
+  background-color: #ffffff;
+  z-index: 2;
+  overflow-x: hidden;
+}
+.user-border {
+  height: 5px;
+  flex-grow: 1;
+  width: 100%;
+  top: -8px;
+  left: 0px;
+  z-index: 3;
+}
+.absolute {
+  position: absolute;
+}
+.relative {
+  position: relative;
+}
+.user-menu {
+  right: 0;
+  top: -62px;
+  z-index: 1;
+}
+.menu-link-icon {
+  margin-right: 8px;
+}
+.menu-link-notification {
+  border-radius: 100%;
+  height: 16px;
+  width: 16px;
+  color: #ffffff;
+  font-size: 10px;
+  top: 8px;
+  left: 13px;
+  padding-right: 1px;
+}
+.dropup-icon,
+.dropdown-icon {
+  margin-left: 10px;
+}
+.bright-blue {
+  background-color: rgb(21, 190, 148);
+}
+.messages-notification {
+  border-radius: 100%;
+  height: 20px;
+  width: 20px;
+  color: #ffffff;
+  text-align: center;
+  font-size: 12px;
+  top: 14px;
+  left: 5px;
+}
+.icon {
+  width: 70px;
+  height: 70px;
+  padding: 22px;
+}
+.user-info {
+  margin-left: 15px;
+}
+.user-username {
+  font-size: 18px;
+  font-weight: 500;
+}
+.user-score {
+  font-size: 14px;
+  color: #989898;
+  font-weight: 300;
+  margin-top: -3px;
+}
+.shadow {
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.24);
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  -ms-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+.wrap {
+  flex-wrap: wrap;
+}
+.grow {
+  flex-grow: 1;
+}
+.leaderboard {
+  padding: 40px 10vw;
+}
+.leaderboard-header {
+  border-radius: 4px 4px 0 0;
+}
+.footer-btn {
+  padding: 8px 12px;
+  margin: 0 15px;
+  background-color: #fff;
+  border-radius: 4px;
+  color: rgb(21, 190, 148)s;
+  border: 1px solid rgb(21, 190, 148);
+}
+.leaderboard-footer {
+  padding: 20px 3vw;
+  background-color:rgb(21, 190, 148);
+  border: 1px solid rgb(21, 190, 148);
+  color: #fff;
+}
+.leaderboard-row {
+  flex-grow: 1;
+  justify-content: space-between;
+  background-color: #ffffff;
+  padding: 10px 3vw;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+.row-caller {
+  align-items: center;
+}
+.row-user {
+  margin-left: 30px;
+  width: 185px;
+}
+.row-user--header {
+  width: 275px;
+}
+.row-position {
+  width: 55px;
+  text-align: center;
+}
+.row-calls {
+  width: 55px;
+  text-align: right;
+}
+.leaderboard-header > .leaderboard-row:first-of-type {
+  border-radius: 4px 4px 0 0 !important;
+}
+.leaderboard-header > .leaderboard-row {
+  background-color: rgb(21, 190, 148);
+  color: #ffffff;
+  border-left: 1px solid rgb(21, 190, 148);
+  border-bottom: 1px solid rgb(21, 190, 148);
+  border-right: 1px solid rgb(21, 190, 148);
+}
+.leaderboard-row:last-of-type {
+  border-radius: 0 0 4px 4px;
+}
+.align-center {
+  align-items: center;
+}
+.row-collapse {
+  flex-grow: 1;
+  justify-content: space-around;
+}
+.row-alt {
+  background-color: #f2f2f2;
+}
+.row-button {
+  padding: 12px 40px 10px 40px;
+  color: #080808;
+  border-top: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  background-color: #ffffff;
+}
+.table-tab:hover,
+.row-button:hover {
+  background-color: #f2f2f2;
+}
+.row-button--active {
+  border-right: 1px solid rgb(21, 190, 148);
+  border-left: 1px solid rgb(21, 190, 148);
+  border-top: 1px solid rgb(21, 190, 148);
+}
+.filter-row {
+  padding: 0;
+}
+.table-tab {
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  background-color: #ffffff;
+}
+.filter-by {
+  border-bottom: 1px solid rgb(21, 190, 148);
+  background-color: rgba(0, 0, 0, 0);
+}
+.row-button--active,
+.tab-active {
+  background-color: rgb(21, 190, 148);
+  color: #ffffff;
+  border-left: 1px solid rgb(21, 190, 148);
+  border-top: 1px solid rgb(21, 190, 148);
+  border-right: 1px solid rgb(21, 190, 148);
+}
+.row-button--active:hover,
+.tab-active:hover {
+  background-color: rgb(21, 190, 148);
+}
+.row--header {
+  padding: 20px 3vw;
+}
+.row-rank--header,
+.row-team--header,
+.row-rank,
+.row-team {
+  width: 16.67%;
+}
+.avatar {
+  border-radius: 100%;
+  width: 60px;
+  height: 60px;
+}
+.wordmark {
+  height: 65px;
+  margin: 8px 0;
+  cursor: pointer;
+}
+.content {
+  min-height: 100vh;
+}
+footer {
+  background-color: rgb(21, 190, 148);
+  padding: 25px 200px;
+  color: #ffffff;
+}
+.nav-link {
+  background-color: #eee;
+  font-size: 18px;
+  font-weight: 300;
+  color: #4a4a4a;
+  padding: 10px 25px 10px 20px;
+  border-left: 1px solid #e2e2e2;
+  border-right: 1px solid #e2e2e2;
+  border-bottom: 1px solid #e2e2e2;
+  position: relative;
+  letter-spacing: -0.5px;
+  z-index: 1;
+}
+.nav-link:hover {
+  background-color: #c7c7c7;
+  border-left: 1px solid #bdbdbd;
+  border-right: 1px solid #bdbdbd;
+  border-bottom: 1px solid #bdbdbd;
+}
+.nav-links {
+  position: absolute;
+  background-color: #eee;
+  left: 0;
+  top: -62px;
+  width: 100%;
+}
+@media (max-width: 1050px) {
+  .row-rank--header,
+  .row-team--header {
+    display: none;
+  }
+  .row-collapse {
+    flex-direction: column;
+  }
+  .row-caller {
+    margin-bottom: -37px;
+    align-items: flex-start;
+  }
+  .row-rank,
+  .row-team {
+    width: 275px;
+    padding-left: 90px;
+    font-size: 12px;
+  }
+  .wordmark {
+    height: 40px;
+  }
+  .nav {
+    padding: 0 10vw;
+  }
+}
+@media (max-width: 800px) {
+  .row-button:last-of-type {
+    border-right: 0;
+  }
+  .filter-by {
+    flex-direction: column;
+  }
+  .table-tab {
+    border-top: 1px solid #e2e2e2;
+    border-left: 0px;
+  }
+  .tab-active {
+    border-top: 1px solid rgb(21, 190, 148);
+  }
+  .row-button {
+    flex-grow: 1;
+    text-align: center;
+  }
+  .user-container {
+    padding: 4px 15px;
+  }
+  .user-menu {
+    top: -96px;
+  }
+  .dropdown-icon,
+  .dropup-icon,
+  .user-info {
+    display: none;
+  }
+  .nav {
+    height: 70px;
+  }
+  .menu-icon {
+    height: 70px;
+    width: 82px;
+    padding: 23px;
+  }
+  .nav-link {
+    border: 1px solid #e2e2e2;
+    padding: 8px 25px;
+  }
+  .active-icon {
+    background-color: #eee;
+    -webkit-box-shadow: inset 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: inset 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
+  }
+}
+.animate-border {
+  animation: animate-border 0.3s ease-in-out 1;
+  animation-fill-mode: forwards;
+}
+.remove-border {
+  animation: remove-border 0.3s ease-in-out 1;
+  animation-fill-mode: forwards;
+}
+@keyframes animate-border {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(7px);
+  }
+}
+@keyframes remove-border {
+  0% {
+    transform: translateY(7px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+.menu-slide-up {
+  animation: menu-slide-up 0.3s ease-in-out 1;
+  animation-fill-mode: forwards;
+}
+.menu-slide-down {
+  animation: menu-slide-down 0.3s ease-in-out 1;
+  animation-fill-mode: forwards;
+}
+@keyframes menu-slide-down {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(144px);
+  }
+}
+@keyframes menu-slide-up {
+  0% {
+    transform: translateY(144px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+</style>
 
-            th{
-                text-decoration: underline;
-                font-size:20px;
-            }
-        </style>
-</head>
-<body>
-    <div class="header_bg">
-        <div class="wrap">
-            <div class="header">
-                <div class="logo">
-                    <a href="index.html"><h1 style="font-size:80px">LeaderBoard</h1></a>
-                </div>
-                <!-- <div class="h_icon">
-                <ul class="icon1 sub-icon1">
-                    <li><a class="active-icon c1" href="#"><i>$300</i></a>
-                        <ul class="sub-icon1 list">
-                            <li><h3>shopping cart empty</h3><a href=""></a></li>
-                            <li><p>if items in your wishlit are missing, <a href="contact.html">contact us</a> to view them</p></li>
-                        </ul>
-                    </li>
-                </ul>
-                </div> -->
-                <div class="h_search" style="margin-top:30px;margin-left:50px;margin-right:50px">
-                    <form>
-                        <input type="text" value="">
-                        <input type="submit" value="">
-                    </form>
-                </div>
-                <div class="clear"></div>
+<nav class="nav flex">
+        <!-- <img class="wordmark" alt="grassrootspb logo" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/225473/grassroots2.svg"> -->
+        <h1>Learn Mate.Ai</h1>
+        <div class="user-navigation flex">
+          <div class="user-block pointer">
+            <div id="personal-border" class="user-border flex absolute bright-blue"></div>
+            <div class="user-container flex align-center relative">
+              <p class="messages-notification absolute bright-blue">2</p>
+              <img class="avatar" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/225473/berner_avatar.png" />
+              <div class="user-info flex column justify-center">
+                <p class="user-username">BernNotice</p>
+                <p class="user-score">2016 Total Calls</p>
+              </div>
+              <svg class="dropdown-icon" fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 10l5 5 5-5z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+              <svg class="dropup-icon" fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 14l5-5 5 5z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+          </svg>
             </div>
-        </div>
-        </div>
-    <div class="header_btm">
-    <div class="wrap">
-        <div class="header_sub">
-            <div class="h_menu">
-                <ul>
-                    <li class="active"><a href="index.html">Home</a></li> |
-				<li><a href="sale.html">Premium Books</a></li> |
-				<li><a href="handbags.html">Premium Videos</a></li> |
-				<li><a href="accessories.html">Premium Membership</a></li> |
-				<li><a href="accessories.html">LeaderBoard</a></li> |
-                </ul>
+            <div class="user-menu flex column absolute">
+              <a class="nav-link flex align-center pointer"> <svg class="menu-link-icon" fill="#4a4a4a" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+        </svg>Your Team</a>
+              <a class=" nav-link flex align-center pointer">
+                <span class="menu-link-notification absolute flex bright-blue justify-center">2</span>
+                <svg class="menu-link-icon" fill="#4a4a4a" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 3H4.99c-1.11 0-1.98.89-1.98 2L3 19c0 1.1.88 2 1.99 2H19c1.1 0 2-.9 2-2V5c0-1.11-.9-2-2-2zm0 12h-4c0 1.66-1.35 3-3 3s-3-1.34-3-3H4.99V5H19v10z"/>
+            <path d="M0 0h24v24H0V0z" fill="none"/>
+        </svg> Messages</a>
+              <a class="nav-link flex align-center pointer">
+                <svg class="menu-link-icon" fill="#4a4a4a" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z"/></svg> Sign Out
+              </a>
             </div>
-            <div class="top-nav">
-                  <nav class="nav">	        	
-                    <a href="#" id="w3-menu-trigger"> </a>
-                          <ul class="nav-list" style="">
-                                <li class="nav-item"><a class="active" href="index.html">Home</a></li>
-                                <li class="nav-item"><a href="sale.html">Store</a></li>
-                                <li class="nav-item"><a href="handbags.html">LeaderBoard</a></li>
-                         </ul>
-                   </nav>
-                     <div class="search_box">
-                    <form>
-                       <input type="text" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}"><input type="submit" value="">
-                    </form>
-                </div>
-                  <div class="clear"> </div>
-                  <script src="js/responsive.menu.js"></script>
-             </div>		  
-        <div class="clear"></div>
-    </div>
-    </div>
-    </div>
-
-
-            <div class="alert alert-success" style="width:80%;margin-right:10%;margin-left:10%;margin-top:5%">
-                    <p style="font-size:40px"><strong>Congratulations!</strong>You have total token credits worth 1000 rupees ,feel free to shop our premium store at discounted prices</p>
+          </div>
+          <div class="menu-block pointer flex column">
+            <div id="menu-border" class="user-border flex absolute bright-blue"></div>
+            <div class="menu-icon flex drop-down align-center justify-center">Menu</div>
+            <div class="nav-links flex column">
+              <a class="nav-link flex align-center pointer"><svg class="menu-link-icon" fill="#4a4a4a" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+          <path d="M0 0h24v24H0z" fill="none"/>
+      </svg>Leaderboard</a>
+              <a class="nav-link flex align-center pointer"><svg class="menu-link-icon" fill="#4a4a4a" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/>
+      </svg> Help</a>
+              <a class="nav-link flex align-center pointer"><svg class="menu-link-icon" fill="#4a4a4a" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 5v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.11 0-2 .9-2 2zm12 4c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3zm-9 8c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1H6v-1z"/>
+          <path d="M0 0h24v24H0z" fill="none"/>
+      </svg> Candidates</a>
+            </div>
+          </div>
+      
+        </div>
+      </nav>
+      
+      <div class="content">
+      
+        <div class="search-bar flex grow">
+          <input class="search flex grow" placeholder="Search"/>
+        </div>
+      
+        <div class="leaderboard flex column wrap">
+          <div class="leaderboard-table flex column">
+            <div class="leaderboard-header flex column grow">
+      
+                <div class="filter-by flex grow wrap">
+                  <div class="time-filter flex grow">
+                    <div class="row-button pointer row-button--active align-center">Today</div>
+                    <div class="row-button pointer align-center">This week</div>
+                    <div class="row-button pointer align-center">All-time</div>
                   </div>
-
-    
-
-    
-    <div class="container" style="margin-top:5%;margin-bottom:5%">
-        <h1 style="font-size:60px;"><span>Your Statistics</span> <span style="margin-left:5%;float:right;margin-right:10%">Your Ranking</span></h1>
-        <span><img src="graph.jpg" style="height:300px;width:300;border-radius:10%;display:inline-block" alt="">
-        </span>
-        <table style="display:inline-block;width:40%;margin-left:10%">
-                <tr>
-                  <th>Company</th>
-                  <th>Contact</th>
-                  <th>Country</th>
-                </tr>
-                <tr>
-                  <td>Alfreds Futterkiste</td>
-                  <td>Maria Anders</td>
-                  <td>Germany</td>
-                </tr>
-                <tr>
-                  <td>Centro comercial Moctezuma</td>
-                  <td>Francisco Chang</td>
-                  <td>Mexico</td>
-                </tr>
-                <tr>
-                  <td>Ernst Handel</td>
-                  <td>Roland Mendel</td>
-                  <td>Austria</td>
-                </tr>
-                <tr>
-                  <td>Island Trading</td>
-                  <td>Helen Bennett</td>
-                  <td>UK</td>
-                </tr>
-                <tr>
-                  <td>Laughing Bacchus Winecellars</td>
-                  <td>Yoshi Tannamuri</td>
-                  <td>Canada</td>
-                </tr>
-                <tr>
-                  <td>Magazzini Alimentari Riuniti</td>
-                  <td>Giovanni Rovelli</td>
-                  <td>Italy</td>
-                </tr>
-              </table>  
-    </div>
-
-    <!-- start footer -->
-<div class="footer_bg">
-        <div class="wrap">	
-            <div class="footer">
-                <!-- start grids_of_4 -->	
-                <div class="grids_of_4">
-                    <div class="grid1_of_4">
-                        <h4>featured sale</h4>
-                        <ul class="f_nav">
-                            <li><a href="">Machine Learning</a></li>
-                            <li><a href="">Android Development</a></li>
-                            <li><a href="">Web Development</a></li>
-                        </ul>
-                    </div>
-                    <div class="grid1_of_4">
-                        <h4>Featured Books</h4>
-                        <ul class="f_nav">
-                            <li><a href="">Data Structures with C/C++</a></li>
-                            <li><a href="">Database Managment System</a></li>
-                            <li><a href="">Beauty and the Beast</a></li>
-                        </ul>
-                    </div>
-                    <div class="grid1_of_4">
-                        <h4>Featured videos</h4>
-                        <ul class="f_nav">
-                            <li><a href="">Understanding firebase</a></li>
-                            <li><a href="">Creating first c program</a></li>
-                            <li><a href="">understanding business analytics</a></li>
-                        </ul>
-                    </div>
-                    <div class="grid1_of_4">
-                        <h4>quick links</h4>
-                        <ul class="f_nav">
-                            <li><a href="">Help</a></li>
-                            <li><a href="">Contact</a></li>
-                            <li><a href="">Support</a></li>
-                        </ul>
-                    </div>
-                    <div class="clear"></div>
+                  <div class="subject-filter flex grow">
+                    <div class="table-tab pointer flex grow justify-center align-center tab-active">
+                      <svg class="menu-link-icon" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                      </svg>
+                      Users</div>
+                    <div class="table-tab pointer flex grow justify-center align-center"> <svg class="menu-link-icon" fill="#4a4a4a" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                      </svg>
+                      Teams</div>
+                  </div>
                 </div>
+      
+                <div class="leaderboard-row flex align-center row--header" style="border-radius: 0 !important;">
+                  <div class="row-position">Position</div>
+                  <div class="row-collapse flex align-center">
+                    <div class="row-user--header">Name</div>
+                    <div class="row-team--header">UserName</div>
+                    <div class="row-rank--header">Rank</div>
+                  </div>
+                  <div class="row-calls">Tokens </div>
+                </div>
+              </div>
+      
+      
+          <div class="leaderboard-body flex column grow">
+            <div class="leaderboard-row flex align-center">
+              <div class="row-position">1</div>
+              <div class="row-collapse flex align-center">
+                <div class="row-caller flex">
+                  <img class="avatar" src="https://openclipart.org/image/2400px/svg_to_png/211821/matt-icons_preferences-desktop-personal.png" />
+                  <div class="row-user">thebestberniefangirl1967</div>
+                </div>
+                <div class="row-team">Electoral Avengers</div>
+                <div class="row-rank">1152</div>
+              </div>
+              <div class="row-calls">501</div>
             </div>
+      
+            <div class="leaderboard-row flex row-alt align-center">
+              <div class="row-position">2</div>
+              <div class="row-collapse flex align-center">
+                <div class="row-caller flex">
+                  <img class="avatar" src="https://i1.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?resize=256%2C256&quality=100" />
+                  <p class="row-user">doritosguy</p>
+                </div>
+                <div class="row-team">the trashmen</div>
+                <div class="row-rank">1200</div>
+              </div>
+              <div class="row-calls">457</div>
+            </div>
+      
+            <div class="leaderboard-row flex align-center">
+              <div class="row-position">3</div>
+              <div class="row-collapse flex align-center">
+                <div class="row-caller flex">
+                  <img class="avatar" src="https://www.atomix.com.au/media/2015/06/atomix_user31.png" />
+                  <div class="row-user">SaveCapitalism</div>
+                </div>
+                <div class="row-team">Common Sense Party</div>
+                <div class="row-rank">1250</div>
+              </div>
+              <div class="row-calls">231</div>
+            </div>
+      
+            <div class="leaderboard-row flex row-alt align-center">
+              <div class="row-position">4</div>
+              <div class="row-collapse flex align-center">
+                <div class="row-caller flex">
+                  <img class="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYEvDZ_QPfa86ouG3gRFdKsmWXG-Guvn0I8gvmZxN97lI40cgLWw" />
+                  <div class="row-user">RunTheJewels</div>
+                </div>
+                <div class="row-team">FeelTheBurn</div>
+                <div class="row-rank">1300</div>
+              </div>
+              <div class="row-calls">440</div>
+            </div>
+      
+            <div class="leaderboard-row flex align-center">
+              <div class="row-position">5</div>
+              <div class="row-collapse flex align-center">
+                <div class="row-caller flex">
+                  <img class="avatar" src="http://icons.iconarchive.com/icons/artua/dragon-soft/512/User-icon.png" />
+                  <div class="row-user">Brexit at Tiffany's</div>
+                </div>
+                <div class="row-team">Labour Party</div>
+                <div class="row-rank">1357</div>
+              </div>
+              <div class="row-calls">360</div>
+            </div>
+      
+            <div class="leaderboard-footer flex align-center">
+        Page 1 of 2 <a class="footer-btn pointer">Next</a> 25 of 37 items
+            </div>
+      
+          </div>
         </div>
+      
         </div>
         
-    
+      </div>
+      
+      <footer class="flex column align-center justify-center">
+        <p>Developed and paid for by volunteers</p>
+        <img src="https://d397eo7kv84tb5.cloudfront.net/static/images/misc/NotTheBillionairesWhite.png" />
+      </footer>
 
-    <!-- start footer -->
-    <div class="footer_bg1">
-    <div class="wrap">
-        <div class="footer">
-            <!-- scroll_top_btn -->
-            <script type="text/javascript">
-                $(document).ready(function() {
-                
-                    var defaults = {
-                          containerID: 'toTop', // fading element id
-                        containerHoverID: 'toTopHover', // fading element hover id
-                        scrollSpeed: 1200,
-                        easingType: 'linear' 
-                     };
-                    
-                    
-                    $().UItoTop({ easingType: 'easeOutQuart' });
-                    
-                });
-            </script>
-             <a href="#" id="toTop" style="display: block;"><span id="toTopHover" style="opacity: 1;"></span></a>
-            <!--end scroll_top_btn -->
-            <div class="copy">
-                <!-- <p class="link">&copy;  All rights reserved | Template by&nbsp;&nbsp;<a href="http://w3layouts.com/"> W3Layouts</a></p> -->
-            </div>
-            <div class="clear"></div>
-        </div>
-</body>
-</html>
+      <script>
+      $(document).ready(function() {
+  
+  var border = $('#personal-border');
+  var userMenu = $('.user-menu');
+  var userBlock = $('.user-block');
+  $('.dropup-icon').hide();
+  $('.menu-icon').click(function() {
+    if ($('.nav-links').hasClass('menu-slide-down')) {
+      $('.nav-links').removeClass('menu-slide-down');
+      $('.nav-links').addClass('menu-slide-up');
+    } else {
+      $('.nav-links').removeClass('menu-slide-up');
+      $('.nav-links').addClass('menu-slide-down');
+    }
+    $(this).toggleClass('active');
+    $('.menu-icon').toggleClass('active-icon');
+  });
+  userBlock.click(function() {
+    $('.dropup-icon').toggle();
+    $('.dropdown-icon').toggle();
+    $('.user-container').toggleClass('active');
+    if (userMenu.hasClass('menu-slide-down')) {
+      userMenu.removeClass('menu-slide-down');
+      userMenu.addClass('menu-slide-up');
+    } else {
+      userMenu.removeClass('menu-slide-up');
+      userMenu.addClass('menu-slide-down');
+    }
+  });
+  userBlock.mouseenter(function() {
+    border.removeClass('remove-border');
+    border.addClass('animate-border');
+  });
+  userBlock.mouseleave(function() {
+    border.removeClass('animate-border');
+    border.addClass('remove-border');
+  });
+  
+  $('.menu-icon').mouseenter(function() {
+    $('#menu-border').removeClass('remove-border');
+    $('#menu-border').addClass('animate-border');
+  });
+  $('.menu-icon').mouseleave(function() {
+    $('#menu-border').removeClass('animate-border');
+    $('#menu-border').addClass('remove-border');
+  });
+});
+      </script>
