@@ -696,7 +696,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	store.transfer('0x1b414C660EAe89DbB809A29428b3CB0b915684ed','20',function(err,res){
 		if(!err){
 			console.log('transferring');
-            console.log(res);
+			console.log(res);
+			document.location.href='http://localhost:4000/bill/'+res; 
         }else {
             console.log(err);
         }
@@ -706,8 +707,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         }else {
             console.log(err);
         }
-	}));
-    
+	}));  
 };
 </script>
 </body>
