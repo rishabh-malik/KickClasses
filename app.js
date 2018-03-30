@@ -32,6 +32,25 @@ app.get('/store',function(req,res){
     res.sendFile(__dirname+'/Store/store.html');
 });
 
+app.get('/leaderBoard',function(req,res){
+    res.sendFile(__dirname+'/Store/leaderBoard.html');
+});
+
+app.get('/tutors',function(req,res){
+    res.sendFile(__dirname+'/tutors/index.html');
+});
+
+app.get('/vr',function(req,res){
+    res.redirect('http://localhost:8081/vr/');
+})
+
+app.get('/liveWhiteBoard',function(req,res){
+    res.sendFile(__dirname+'/live_whiteboard/public/index.html');
+});
+
+app.get('/Bill',function(req,res){
+    res.sendFile(__dirname+'/Bill/index.html')
+})
 //Socket setup
 //socket is a function which takes which server we want to work with
 var io=socket(server);
@@ -56,4 +75,3 @@ io.on('connection',function(socket){
         socket.broadcast.emit('typing',data);
     });
 });
-
