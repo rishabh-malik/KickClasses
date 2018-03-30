@@ -689,20 +689,22 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         }
 	})
     
-	store.transfer('0x1b414C660EAe89DbB809A29428b3CB0b915684ed','20',function(err,res){
+	store.transfer('0xC5fdf4076b8F3A5357c5E395ab970B5B54098Fef','20',function(err,res){
 		if(!err){
 			console.log('transferring');
             console.log(res);
         }else {
             console.log(err);
         }
-	}).then(store.balanceOf('0x1b414C660EAe89DbB809A29428b3CB0b915684ed',function(err,res){
+	})
+	
+	store.balanceOf('0x1b414C660EAe89DbB809A29428b3CB0b915684ed',function(err,res){
 		if(!err){
             console.log(res);
         }else {
             console.log(err);
         }
-	}));
+	});
     
 };
 </script>
