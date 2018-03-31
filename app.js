@@ -48,7 +48,7 @@ app.get('/liveWhiteBoard',function(req,res){
     res.sendFile(__dirname+'/live_whiteboard/public/index.html');
 });
 
-app.get('/Bill',function(req,res){
+app.get('/bill/:id',function(req,res){
     res.sendFile(__dirname+'/Bill/index.html')
 })
 //Socket setup
